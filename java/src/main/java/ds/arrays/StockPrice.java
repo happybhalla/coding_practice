@@ -1,4 +1,4 @@
-package array;
+package ds.arrays;
 
 public class StockPrice {
 
