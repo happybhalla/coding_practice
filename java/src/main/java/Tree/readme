@@ -1,0 +1,7 @@
+A Binary Tree node contains following parts.
+
+Data
+Pointer to left child
+Pointer to right child
+
+
