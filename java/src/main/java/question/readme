@@ -1,0 +1,133 @@
+
+trueBalance question:-
+AlternateReverseLinkedList
+input : -  1 2 3 4 5
+                     output :-  1 5 2 4 3
+
+    =>
+
+                     1)
+                     Inorder traversal:
+                     bfdcgeha
+
+                     Postorder  traversal:
+                     fdghecba
+
+                     Preorder?
+                     cfbdgeha
+
+
+
+                     2)
+                     6  8  7 10  9  1  8
+
+                     Max profit - 7
+                     Buy - 1
+                     Sell - 8
+
+                     Daily share prices
+                     Buy first
+                     Sell later
+                     Maximize profit
+                     Only 1 buy, 1 sell
+
+                     No txn
+                     Only 1 buy
+                     Only 1 sell
+                     1 buy + 1 sell
+
+                     Expected -O(n)
+
+                     Public static int maxProfit(int[] input, int start,int end){
+
+                     if(end <= start){
+                     Return 0
+                     }
+
+                     maxProfit =0;
+
+                     for(int i = start ;i<end ;i++){
+
+                     for(int j =i +1;j< =end ;j++){
+
+                     if(input[i] < input[j]){
+                     Int profit = input[j] -input[i]      +maxProfit(input,start,i-1)+maxProfit(input,j+1,end);
+
+                         maxProfit = Math.max(maxProfit,profit);
+
+                     }
+
+                     }
+
+                     }
+
+                     }
+
+
+                     6  8  7 10  9  1  8
+                        6 ]=> 2+3+7=>12
+
+                          8  7 10  9  1  8
+                      => 2+ (0)+(,3,7)=>
+
+
+
+                     3)
+
+                     2nd highest salaried employee name
+
+
+                     Select name from employee order by salary desc limit 2,1;
+
+                     Table name - employee
+                     Id name salary
+                     1  A        1000
+                     2  B        2000
+                     3  C        3000
+                     4  D        4000
+
+
+
+
+
+
+                     Book My Show
+
+                     Function req :-
+
+                     Inventory:-
+                      Event:
+                        Show timeSlot;
+                        Movies:
+
+
+
+                     User->
+                       Search : input-date ,eventCateogry
+                                    : seat
+                       Booking : selection post search.
+
+                     User data Mysql
+
+
+                     Booking window - 7 min
+                     Booking -> selectSeat =>   reddis- ttl
+                                     -> paymentService
+
+
+
+
+
+
+
+                     NFR:-
+
+                      Inventory Management
+
+                      Micro services:
+                     Payment:Z
+
+
+
+
+

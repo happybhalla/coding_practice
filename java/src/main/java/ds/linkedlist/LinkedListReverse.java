@@ -1,9 +1,7 @@
 package ds.linkedlist;
 
 
-import org.omg.CORBA.NO_IMPLEMENT;
 
-import java.util.LinkedList;
 
 class Node{
     private int data;

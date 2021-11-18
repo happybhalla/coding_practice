@@ -1,118 +1,42 @@
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
+
+ class Empl{
+     private Integer id;
+     private String name;
+
+     public Empl(Integer id) {
+         this.id = id;
+     }
+
+     @Override
+     public int hashCode() {
+         return 1;
+     }
+
+     @Override
+     public boolean equals(Object obj) {
+         Empl emp= (Empl)obj;
+         if(emp.id == this.id){
+             return false;
+         }else {
+             return false;
+         }
+
+     }
+ }
 
 public class Test {
 
-    private static Integer findIncreasingNumbers(int maxIteration) {
-    SortedSet<Integer> numbers = new TreeSet<Integer>();
-    SortedSet<Integer> numbers2 = new TreeSet<Integer>();
-
-    for (int i=0;i < maxIteration;i++) {
-        int n1 = (int)Math.pow(2, i);
-        numbers.add(n1);
-
-        for (int j=0;j < maxIteration;j++) {
-            int n2 = (int)Math.pow(3, i);
-            numbers.add(n2);
-
-            for (Integer n: numbers) {
-                int n3 = n*n1;
-                numbers2.add(n3);
-            }
-        }
-    }
-
-    numbers.addAll(numbers2);
-
-    List<Integer> l1= new ArrayList<Integer>(numbers);
-
-    return  l1.get(maxIteration);
-}
-
-    static int smallest(int num)
-    {
-        // initialize frequency of each digit to Zero
-        int[] freq = new int[10];
-
-        // Checking Number is positive or Negative
-        boolean is_pos = (num>0);
-
-        // Getting the absolute value of num
-        num = Math.abs(num);
-
-        // count frequency of each digit in the number
-        while (num > 0)
-        {
-            int d = num % 10; // extract last digit
-            freq[d]++; // increment counting
-            num = num / 10; //remove last digit
-        }
-
-        int result = 0;
-
-        // If it is positive Number then it should be smallest
-        if(is_pos)
-        {
-            // Set the Rightmost digit to maximum
-            for (int i = 9 ; i >= 1 ; i--)
-            {
-                if (freq[i] !=0)
-                {
-                    result = i;
-                    freq[i]--;
-                    break;
-                }
-            }
-
-            // arrange all remaining digits
-            // in descending order
-            for (int i = 9 ; i >=0 ; i--)
-                while (freq[i]-- != 0)
-                    result = result * 10 + i;
-
-            // Negative number should be returned here
-            result = result;
-
-        }
-        else // If negative then number should be Largest
-        {
-            // Set the Rightmost digit to maximum
-            for (int i = 9 ; i >= 1 ; i--)
-            {
-                if (freq[i] !=0)
-                {
-                    result = i;
-                    freq[i]--;
-                    break;
-                }
-            }
-
-            // arrange all remaining digits
-            // in descending order
-            for (int i = 9 ; i >=0 ; i--)
-                while (freq[i]-- != 0)
-                    result = result * 10 + i;
-
-            // Negative number should be returned here
-            result = -result;
-        }
-        return result;
-    }
-
-    /**
-     * Based on the following fuzzy question @ StackOverflow
-     * http://stackoverflow.com/questions/7571934/printing-numbers-of-the-form-2i-5j-in-increasing-order
-     *
-     *
-     * Result:
-     * 1 2 4 5 8 10 16 20 25 32 40 64 80 100 125 128 200 256 400 625 1000 2000 10000
-     */
     public static void main(String[] args) {
-        Integer numbers = findIncreasingNumbers(4);
+    Map<Empl,Empl> mp = new HashMap<>();
+        Empl em =  new Empl(1);
+        Empl em2 =  new Empl(1);
 
-        System.out.println(numbers);
+    mp.put(em,em);
+    mp.put(em2,em2);
+
+    System.out.println(mp.size());
+
     }
 }
