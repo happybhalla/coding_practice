@@ -140,6 +140,7 @@ public class Test {
 
     public static void main(String[] args) {
 
+        // test input validating
         //main starting point test 1
         char [] input = {'T', 'T', 'P', 'P', 'T', 'P'};
 
