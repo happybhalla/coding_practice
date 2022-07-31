@@ -140,7 +140,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        //main starting point test
+        //main starting point test 1
         char [] input = {'T', 'T', 'P', 'P', 'T', 'P'};
 
         //getMaxT(input,k);
