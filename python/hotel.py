@@ -134,7 +134,6 @@ def days_wise_data_upload(start_date, days, city, country):
 
 logging.info('script started')
 
-
 '''
 input: start_date :2023-02-24
        days : 10 (how long you want to store data)
