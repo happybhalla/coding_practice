@@ -3,6 +3,15 @@ import requests
 import pymongo
 import json
 from datetime import datetime, timedelta
+import logging
+
+# Set up logging configuration
+logging.basicConfig(filename='hotel.log', level=logging.DEBUG)
+
+# Example usage
+
+
+
 
 
 
@@ -15,79 +24,90 @@ def inser_data_to_db(data):
 
     data = json.loads(data)
     # Insert the data into the collection
-    print("data###########")
-    #print(data)
+
     collection.insert_one(data)
 
 
 def get_hotel_search_api_data(checkin,checkout,city_name,country_name):
     # Set the API endpoint URL
-    url = "https://travelnext.works/api/hotel_trawexv6/hotel_search"
+    payload = ""
+    result = ""
+    try:
+        url = "https://travelnext.works/api/hotel_trawexv6/hotel_search"
 
-    # Set the request payload (data to be sent to the API)
-    payload = {
-        "user_id": "atharvalath96_testAPI",
-        "user_password": "atharvalath96Test@2023",
-        "access": "Test",
-        "ip_address": "49.36.184.44",
-        "checkin": checkin ,
-        "checkout": checkout,
-        "city_name": city_name,
-        "country_name": country_name,
-        "occupancy": [
-            {
-                "room_no": 1,
-                "adult": 2,
-                "child": 0,
-                "child_age": [
-                    0
-                ]
-            }
-        ],
-        "requiredCurrency": "INR"
-    }
-    print(payload)
-    # Make the POST request
-    response = requests.post(url, json=payload)
+        # Set the request payload (data to be sent to the API)
+        payload = {
+            "user_id": "atharvalath96_testAPI",
+            "user_password": "atharvalath96Test@2023",
+            "access": "Test",
+            "ip_address": "49.36.184.44",
+            "checkin": checkin ,
+            "checkout": checkout,
+            "city_name": city_name,
+            "country_name": country_name,
+            "occupancy": [
+                {
+                    "room_no": 1,
+                    "adult": 2,
+                    "child": 0,
+                    "child_age": [
+                        0
+                    ]
+                }
+            ],
+            "requiredCurrency": "INR"
+        }
+        print(payload)
+        # Make the POST request
+        response = requests.post(url, json=payload)
 
-    # Check the response status code
-    if response.status_code == 200:
-        # API call was successful
-        print("API call successful")
-       # print(response.text)
-    else:
-        # API call failed
-        print("API call failed with status code:", response.status_code)
+        # Check the response status code
+        if response.status_code == 200:
+            # API call was successful
+            print("API call successful")
+            result = response.text
+           # print(response.text)
+        else:
+            # API call failed
+            print("API call failed with status code:", response.status_code)
+    except:
+        logging.error('Could not get response from Trawex API for payload'+payload)
+        pass
 
-
-    return response.text
+    return result
 
 
 
 def create_data_to_upload(check_in, check_out, city, country):
+    try:
+        data = get_hotel_search_api_data(check_in,check_out,city,country)
+        parsed_json = json.loads(data)
 
-    data = get_hotel_search_api_data(check_in,check_out,city,country)
-    parsed_json = json.loads(data)
+        # Access the itineraries list
+        itineraries = parsed_json['itineraries']
 
-    # Access the itineraries list
-    itineraries = parsed_json['itineraries']
+        now = datetime.now()
 
-    # Print the itineraries
-    for parsed_json in itineraries:
+        date_of_search = now.strftime("%Y-%m-%d")
 
-        print(parsed_json)
-        #parsed_json = json.loads(itinerary)
+        # Print the itineraries
+        for parsed_json in itineraries:
 
-        # Add a new field to the JSON object
-        parsed_json['date_of_search'] = check_in
-        parsed_json['date_check_in'] = check_in
-        parsed_json['date_check_out'] = check_out
-        # Convert the updated JSON object back to a string
-        updated_json = json.dumps(parsed_json)
-        print(updated_json)
-        print("$$$$$$$$$$$$")
-        inser_data_to_db(updated_json)
 
+            #parsed_json = json.loads(itinerary)
+
+            # Add a new field to the JSON object
+            parsed_json['date_of_search'] = date_of_search
+            parsed_json['date_check_in'] = check_in
+            parsed_json['date_check_out'] = check_out
+            parsed_json['key'] = parsed_json['hotelId'] + "_" + check_in
+
+            # Convert the updated JSON object back to a string
+            updated_json = json.dumps(parsed_json)
+            inser_data_to_db(updated_json)
+    except:
+        logging.error('This is an error log message')
+        pass
 
 def days_wise_data_upload(start_date, days, city, country):
     # Define the starting date
@@ -102,12 +122,17 @@ def days_wise_data_upload(start_date, days, city, country):
     create_data_to_upload(checkin_date.strftime("%Y-%m-%d"),checkout_date.strftime("%Y-%m-%d"),city,country)
     # Loop through and increment the date
     for i in range(days_to_increment):
-        # Increment the date by 1 day
-        checkin_date = checkin_date + timedelta(days=1)
-        checkout_date = checkout_date + timedelta(days=1)
+        try:
 
-        create_data_to_upload(checkin_date.strftime("%Y-%m-%d"),checkout_date.strftime("%Y-%m-%d"),city,country)
+            checkin_date = checkin_date + timedelta(days=1)
+            checkout_date = checkout_date + timedelta(days=1)
 
+            create_data_to_upload(checkin_date.strftime("%Y-%m-%d"),checkout_date.strftime("%Y-%m-%d"),city,country)
+        except:
+            logging.error('could not able to create data payload for check in date '+checkin_date.strftime("%Y-%m-%d"))
+            pass
+
+logging.info('script started')
 
 '''
 input: start_date :2023-02-24
@@ -123,5 +148,10 @@ days_wise_data_upload("2023-02-24",1,"Udaipur","India")
         "city_name": "Bangalore",
         "country_name": "India",
 '''
-print(get_hotel_search_api_data("2023-02-24","2023-02-25","Bangalore","India"))
-print("end")
+#print(get_hotel_search_api_data("2023-02-24","2023-02-25","Bangalore","India"))
+#my_function()
+
+logging.info('script completed ')
+
+
+
