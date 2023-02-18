@@ -66,7 +66,7 @@ def get_hotel_search_api_data(checkin,checkout,city_name,country_name):
             # API call was successful
             print("API call successful")
             result = response.text
-           # print(response.text)
+        # print(response.text)
         else:
             # API call failed
             print("API call failed with status code:", response.status_code)
