@@ -58,6 +58,8 @@ public class MaximumSubarraySum {
         return maxSum;
     }
     public static void main(String[] args) {
-
+        MaximumSubarraySum ob = new MaximumSubarraySum();
+        int[] input = {-2,1,-3,4,-1,2,1,-5,4};
+        System.out.println(ob.maximumSubarraySumBest(input));
     }
 }
