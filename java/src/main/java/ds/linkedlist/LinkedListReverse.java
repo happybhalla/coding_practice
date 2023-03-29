@@ -3,10 +3,10 @@ package ds.linkedlist;
 
 
 
-class Node{
+ class LLNode {
     private int data;
-    Node node ;
-    Node(int data){
+    LLNode node ;
+    LLNode(int data){
         this.data=data;
         this.node= null;
     }
@@ -20,17 +20,17 @@ class Node{
         this.data = data;
     }
 
-    public Node getNode() {
+    public LLNode getNode() {
         return node;
     }
 
-    public void setNode(Node node) {
+    public void setNode(LLNode node) {
         this.node = node;
     }
 }
 public class LinkedListReverse {
 
-    public int getCount(Node head){
+    public int getCount(LLNode head){
         int count =1 ;
 
         while (head.getNode() != null){
@@ -42,9 +42,9 @@ public class LinkedListReverse {
         return  count;
     }
 
-    public Node revLinkList(Node head ,int range){
-        Node temp = head;
-        Node rev = head;
+    public LLNode revLinkList(LLNode head , int range){
+        LLNode temp = head;
+        LLNode rev = head;
 
         while (range / 2 >=0)
         while (range == 0) {
@@ -60,11 +60,11 @@ public class LinkedListReverse {
     }
 
     public static void main(String[] args) {
-        Node head = null;
-        Node tail= null;
+        LLNode head = null;
+        LLNode tail= null;
 
         for (int i = 1; i <= 10; i++) {
-            Node nd = new Node(i);
+            LLNode nd = new LLNode(i);
             if(head ==null){
                    head = nd;
             }else {
@@ -75,7 +75,7 @@ public class LinkedListReverse {
         LinkedListReverse obj = new LinkedListReverse();
         System.out.println( obj.getCount(head));
 
-        Node temp = head;
+        LLNode temp = head;
         while (temp.getNode() != null){
             System.out.println(temp.getData());
             temp = temp.getNode();
